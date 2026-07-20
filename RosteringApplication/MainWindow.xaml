@@ -7,13 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="400">
     <Grid>
-        <ListView  ItemsSource="{Binding Employees}">
+        <ListView  ItemsSource="{Binding Employees}" Padding="0,25,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="Name"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FullName}" Header="Name"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Role}" Header="Role"/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <DockPanel LastChildFill="False"/>
+        <ToolBar Width="400" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25">
+            <Button Command="{Binding OpenEmployeeAddWindow}">Add Employee</Button>
+        </ToolBar>
     </Grid>
 </Window>
