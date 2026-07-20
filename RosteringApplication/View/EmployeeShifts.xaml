@@ -1,0 +1,25 @@
+﻿<Window x:Class="RosteringApplication.View.EmployeeShifts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RosteringApplication.View"
+        mc:Ignorable="d"
+        Title="EmployeeShifts" Height="450" Width="400">
+    <Grid>
+        <ListView ItemsSource="{Binding Employee.Shifts}" Padding="0,25,0,0" Margin="0,26,0,0">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Date"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Start}" Header="Start"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding End}" Header="End"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Employee.FullName}" VerticalAlignment="Top"/>
+        <ToolBar Width="400" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Margin="0,26,0,0">
+            <Button Command="{Binding OpenShiftAddWindow}" Content="Add Shift"/>
+        </ToolBar>
+    </Grid>
+</Window>

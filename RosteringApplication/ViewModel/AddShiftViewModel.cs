@@ -19,34 +19,38 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace RosteringApplication.ViewModel
 {
-    public class AddEmployeeViewModel
+    public class AddShiftViewModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Start { get; set; } = DateTime.Now;
+        public DateTime End { get; set; } = DateTime.Now;
+        public string? Description { get; set; }
+        public ICommand AddShift { get; set; }
 
-        public ICommand AddEmployee { get; set; }
+        public EmployeeShiftsViewModel Parent { get; set; }
 
         public ICommand Cancel { get; set; }
 
-        public AddEmployeeViewModel()
+        public AddShiftViewModel(EmployeeShiftsViewModel parent)
         {
-            AddEmployee = new CommunicateCommand(ExecuteEmployeeAdd, CanAddEmployee);
+            AddShift = new CommunicateCommand(ExecuteShiftAdd, CanAddShift);
             Cancel = new CommunicateCommand(ExecuteCancel, CanCancel);
+            Parent = parent;
         }
 
-        private bool CanAddEmployee(object obj)
+        private bool CanAddShift(object obj)
         {
             return true;
         }
 
-        private void ExecuteEmployeeAdd(object obj)
+        private void ExecuteShiftAdd(object obj)
         {
-            Employee addedEmployee = new Employee(FirstName, LastName, Role);
-            MainViewModel.AddEmployee(addedEmployee);
+            Shift shift = new Shift(DateOnly.FromDateTime(Date), TimeOnly.FromDateTime(Start), TimeOnly.FromDateTime(End), Description);
+            Parent.AddShift(shift);
         }
 
         private bool CanCancel(object obj)

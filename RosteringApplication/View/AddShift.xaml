@@ -1,0 +1,20 @@
+﻿<Window x:Class="RosteringApplication.View.AddShift"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RosteringApplication.View"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="AddShift" Height="250" Width="200" ResizeMode="NoResize" Name="AddShiftWindow">
+    <Grid>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="11,174,0,0" Command="{Binding AddShift}" VerticalAlignment="Top" RenderTransformOrigin="-0.349,0.024"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="61,174,0,0"  Command="{Binding Cancel}" CommandParameter="{Binding ElementName=AddShiftWindow}" VerticalAlignment="Top" RenderTransformOrigin="-0.349,0.024"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-au" Text="Date"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.599,1.622"><Run Language="en-au" Text="Start"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.646"><Run Language="en-au" Text="End"/></TextBlock>
+        <DatePicker HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" DisplayDate="{Binding Date}" Height="27"/>
+        <xctk:TimePicker Width="100" Margin="10,80,90,122" Value="{Binding Start}"/>
+        <xctk:TimePicker Width="100" Margin="10,133,90,60" Value="{Binding End}"/>
+    </Grid>
+</Window>
