@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:RosteringApplication.View"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddShift" Height="250" Width="200" ResizeMode="NoResize" Name="AddShiftWindow">
+        Title="AddShift" Height="250" Width="400
+        " ResizeMode="NoResize" Name="AddShiftWindow">
     <Grid>
         <Button Content="Add" HorizontalAlignment="Left" Margin="11,174,0,0" Command="{Binding AddShift}" VerticalAlignment="Top" RenderTransformOrigin="-0.349,0.024"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="61,174,0,0"  Command="{Binding Cancel}" CommandParameter="{Binding ElementName=AddShiftWindow}" VerticalAlignment="Top" RenderTransformOrigin="-0.349,0.024"/>
@@ -14,7 +15,9 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.599,1.622"><Run Language="en-au" Text="Start"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="10,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.646"><Run Language="en-au" Text="End"/></TextBlock>
         <DatePicker HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" DisplayDate="{Binding Date}" Height="27"/>
-        <xctk:TimePicker Width="100" Margin="10,80,90,122" Value="{Binding Start}"/>
-        <xctk:TimePicker Width="100" Margin="10,133,90,60" Value="{Binding End}"/>
+        <xctk:TimePicker Width="100" Margin="10,80,290,117" Value="{Binding Start}"/>
+        <xctk:TimePicker Width="100" Margin="10,133,290,65" Value="{Binding End}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="139,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.646" Height="17"><Run Language="en-au" Text="Description"/><LineBreak/><Run Language="en-au"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Margin="139,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" Height="169" Text="{Binding Description}"/>
     </Grid>
 </Window>

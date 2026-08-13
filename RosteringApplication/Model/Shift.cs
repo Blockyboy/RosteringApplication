@@ -11,14 +11,24 @@ namespace RosteringApplication.Model
         public DateOnly Date {  get; set; }
         public TimeOnly Start { get; set; }
         public TimeOnly End { get; set; }
+
+        public DateTime? Minimum =>
+        MultiDay ? null : Date.ToDateTime(Start);
+
+        public DateTime? Maximum =>
+        MultiDay ? null : Date.ToDateTime(new TimeOnly(23, 59));
+        public bool MultiDay { get; set;}
         public string? Description { get; set; }
 
-        public Shift(DateOnly date, TimeOnly start, TimeOnly end, string? description)
+        public int EmployeeId { get; set; }
+
+        public Shift(DateOnly date, TimeOnly start, TimeOnly end, string? description, int id)
         {
             Date = date;
             Start = start;
             End = end;
             Description = description;
+            EmployeeId = id;
         }
 
         public int CompareTo(Shift? other)

@@ -9,12 +9,20 @@ using System.Windows.Input;
 using RosteringApplication.Command;
 using RosteringApplication.View;
 using System.Net.NetworkInformation;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using System.IO;
+using System.Text.Json;
+using RosteringApplication;
+using System.Runtime.InteropServices;
 
 namespace RosteringApplication.ViewModel
 {
     public class MainViewModel
     {
-        public static ObservableCollection<Employee> Employees { get; } = new  ObservableCollection<Employee>(); 
+        public static JsonInitialiser JsonTranslator = new JsonInitialiser();
+
+        public static ObservableCollection<Employee> Employees { get; set; }
 
         public static int CurrentID = 0;
 
@@ -23,8 +31,31 @@ namespace RosteringApplication.ViewModel
 
         public MainViewModel()
         {
+            JsonTranslator.CheckFileExistance();
+            Employees = JsonTranslator.LoadEmployees(50);
+            var shifts = JsonTranslator.LoadShift();
+            var employeesById = Employees.ToDictionary(e => e.Id);
+            foreach (var shift in shifts)
+            {
+                if (employeesById.TryGetValue(shift.EmployeeId, out var employee))
+                {
+                    employee.Shifts.Add(shift);
+                }
+            }
             OpenEmployeeAddWindow = new CommunicateCommand(ExecuteEmployeeAddWindow, CanOpenEmployeeAddWindow);
             OpenEmployeeShiftWindow = new CommunicateCommand(ExecuteEmployeeShiftWindow, CanOpenEmployeeShiftWindow);
+        }
+
+
+
+        public static void WriteEmployeeFile(string jsonData)
+        {
+            JsonTranslator.WriteEmployeeFile(jsonData);
+        }
+
+        public static void WriteShiftFile()
+        {
+            JsonTranslator.WriteShiftFile();
         }
 
         public static void AddEmployee(Employee employee)

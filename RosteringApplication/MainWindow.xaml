@@ -21,6 +21,7 @@
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding FullName}" Header="Name"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Role}" Header="Role"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding NextShift}" Header="Next Shift"/>
                 </GridView>
             </ListView.View>
         </ListView>

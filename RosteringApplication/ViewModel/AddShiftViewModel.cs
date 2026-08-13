@@ -20,6 +20,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Text.Json;
+using System.IO;
 
 namespace RosteringApplication.ViewModel
 {
@@ -27,10 +29,34 @@ namespace RosteringApplication.ViewModel
     {
         public DateTime Date { get; set; } = DateTime.Now;
         public DateTime Start { get; set; } = DateTime.Now;
-        public DateTime End { get; set; } = DateTime.Now;
+
+        private DateTime _end;
+        public DateTime End 
+        { 
+            get => _end;
+            
+            set
+            {
+                if(Minimum != null && value < Minimum)
+                {
+                    value = (DateTime)Minimum;
+                }
+                else if(Maximum != null && value > Maximum)
+                {
+                    value = (DateTime)Maximum;
+                }
+
+                _end = value;
+            } 
+        }
         public string? Description { get; set; }
         public ICommand AddShift { get; set; }
+        public DateTime? Minimum =>
+        MultiDay ? null : Start;
 
+        public DateTime? Maximum =>
+        MultiDay ? null : Date.Date + new TimeSpan(23, 59, 0);
+        public bool MultiDay { get; set; }
         public EmployeeShiftsViewModel Parent { get; set; }
 
         public ICommand Cancel { get; set; }
@@ -49,8 +75,9 @@ namespace RosteringApplication.ViewModel
 
         private void ExecuteShiftAdd(object obj)
         {
-            Shift shift = new Shift(DateOnly.FromDateTime(Date), TimeOnly.FromDateTime(Start), TimeOnly.FromDateTime(End), Description);
+            Shift shift = new Shift(DateOnly.FromDateTime(Date), TimeOnly.FromDateTime(Start), TimeOnly.FromDateTime(End), Description, Parent.Employee.Id);
             Parent.AddShift(shift);
+            MainViewModel.WriteShiftFile();
         }
 
         private bool CanCancel(object obj)

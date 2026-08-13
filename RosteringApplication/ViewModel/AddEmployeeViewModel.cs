@@ -19,6 +19,8 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace RosteringApplication.ViewModel
 {
@@ -47,6 +49,8 @@ namespace RosteringApplication.ViewModel
         {
             Employee addedEmployee = new Employee(FirstName, LastName, Role);
             MainViewModel.AddEmployee(addedEmployee);
+            var jsonData = JsonConvert.SerializeObject(addedEmployee);
+            MainViewModel.WriteEmployeeFile(jsonData);
         }
 
         private bool CanCancel(object obj)
