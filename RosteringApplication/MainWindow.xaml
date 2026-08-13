@@ -28,6 +28,7 @@
         <DockPanel LastChildFill="False"/>
         <ToolBar Width="400" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25">
             <Button Command="{Binding OpenEmployeeAddWindow}">Add Employee</Button>
+            <Button Command="{Binding RemoveEmployee}" CommandParameter="{Binding SelectedItem, ElementName=EmployeeList}">Remove Employee</Button>
         </ToolBar>
     </Grid>
 </Window>

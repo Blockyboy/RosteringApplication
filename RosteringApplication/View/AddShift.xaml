@@ -14,7 +14,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-au" Text="Date"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.599,1.622"><Run Language="en-au" Text="Start"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="10,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.646"><Run Language="en-au" Text="End"/></TextBlock>
-        <DatePicker HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" DisplayDate="{Binding Date}" Height="27"/>
+        <DatePicker HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" SelectedDate="{Binding Date}" Height="27"/>
         <xctk:TimePicker Width="100" Margin="10,80,290,117" Value="{Binding Start}"/>
         <xctk:TimePicker Width="100" Margin="10,133,290,65" Value="{Binding End}"/>
         <TextBlock HorizontalAlignment="Left" Margin="139,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.646" Height="17"><Run Language="en-au" Text="Description"/><LineBreak/><Run Language="en-au"/></TextBlock>

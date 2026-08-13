@@ -15,6 +15,7 @@ using System.IO;
 using System.Text.Json;
 using RosteringApplication;
 using System.Runtime.InteropServices;
+using Microsoft.Xaml.Behaviors.Core;
 
 namespace RosteringApplication.ViewModel
 {
@@ -28,6 +29,8 @@ namespace RosteringApplication.ViewModel
 
         public ICommand OpenEmployeeAddWindow {  get; set; }
         public ICommand OpenEmployeeShiftWindow { get; set; }
+
+        public ICommand RemoveEmployee { get; set; }
 
         public MainViewModel()
         {
@@ -44,6 +47,7 @@ namespace RosteringApplication.ViewModel
             }
             OpenEmployeeAddWindow = new CommunicateCommand(ExecuteEmployeeAddWindow, CanOpenEmployeeAddWindow);
             OpenEmployeeShiftWindow = new CommunicateCommand(ExecuteEmployeeShiftWindow, CanOpenEmployeeShiftWindow);
+            RemoveEmployee = new CommunicateCommand(ExecuteEmployeeRemoval, CanRemoveEmployee);
         }
 
 
@@ -64,6 +68,25 @@ namespace RosteringApplication.ViewModel
             ++CurrentID;
 
             Employees.Add(employee);
+        }
+
+        private bool CanRemoveEmployee(object obj)
+        {
+            if(obj == null)
+            {  
+                return false; 
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void ExecuteEmployeeRemoval(object obj)
+        {
+            _ = JsonTranslator.DeleteEmployeeById(((Employee)obj).Id);
+
+            Employees.Remove((Employee)obj);
         }
 
         private bool CanOpenEmployeeAddWindow(object obj)

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using RosteringApplication.Model;
 using System.Collections.ObjectModel;
 using RosteringApplication.ViewModel;
+using System.Security.Cryptography;
 
 namespace RosteringApplication
 {
@@ -42,8 +43,59 @@ namespace RosteringApplication
             }
 
             reader.Close();
-
             return employees;
+        }
+
+        public async Task DeleteEmployeeById(int id)
+        {
+            await WipeEmployeeShifts(id);
+
+            string tempFile = EmployeeFile + ".tmp";
+
+            using var input = new StreamReader(EmployeeFile);
+            await using var output = new StreamWriter(tempFile, false);
+
+            string? line;
+
+            while ((line = await input.ReadLineAsync()) != null)
+            {
+                var deserialisedLine = JsonConvert.DeserializeObject<Employee>(line);
+
+                if (deserialisedLine != null && deserialisedLine.Id == id)
+                    continue;
+
+                await output.WriteLineAsync(line);
+            }
+
+            input.Close();
+            output.Close();
+
+            File.Move(tempFile, EmployeeFile, true);
+        }
+
+        private async Task WipeEmployeeShifts(int id)
+        {
+            string tempFile = ShiftFile + ".tmp";
+
+            using var input = new StreamReader(ShiftFile);
+            await using var output = new StreamWriter(tempFile, false);
+
+            string? line;
+
+            while ((line = await input.ReadLineAsync()) != null)
+            {
+                var deserialisedLine = JsonConvert.DeserializeObject<Shift>(line);
+
+                if (deserialisedLine != null && deserialisedLine.EmployeeId == id)
+                    continue;
+
+                await output.WriteLineAsync(line);
+            }
+
+            input.Close();
+            output.Close();
+
+            File.Move(tempFile, ShiftFile, true);
         }
 
         public List<Shift> LoadShift()
@@ -60,7 +112,10 @@ namespace RosteringApplication
         {
             var allShifts = MainViewModel.Employees.SelectMany(e => e.Shifts).ToList();
 
-            File.WriteAllText(ShiftFile, JsonConvert.SerializeObject(allShifts) + Environment.NewLine);
+            foreach (var shift in allShifts)
+            {
+                File.AppendAllText(ShiftFile, JsonConvert.SerializeObject(shift) + Environment.NewLine);
+            }
         }
 
         public void CheckFileExistance()
